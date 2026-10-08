@@ -1,8 +1,8 @@
 {
-  "name": "velo-browser",
-  "productName": "Velo",
+  "name": "khram-browser",
+  "productName": "Khram",
   "version": "2.0.2",
-  "description": "Velo",
+  "description": "Khram",
   "main": "./out/main/index.js",
   "type": "module",
   "scripts": {
@@ -15,24 +15,24 @@
     "dist:win": "electron-vite build && node scripts/sync-windows-ico.cjs && cross-env CSC_IDENTITY_AUTO_DISCOVERY=false electron-builder --win",
     "dist:mac": "electron-vite build && electron-builder --mac",
     "dist:linux": "electron-vite build && electron-builder --linux",
-    "clean:win-browser-reg": "powershell -NoProfile -ExecutionPolicy Bypass -File scripts/clean-velo-windows-browser-registry.ps1"
+    "clean:win-browser-reg": "powershell -NoProfile -ExecutionPolicy Bypass -File scripts/clean-khram-windows-browser-registry.ps1"
   },
   "keywords": [
     "electron",
     "browser",
     "chromium",
-    "velo"
+    "khram"
   ],
   "author": "",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/aggeloskwn7/Velo-Browser.git"
+    "url": "https://github.com/eydgaj24-sudo/eydgaj-Browser.git"
   },
   "build": {
-    "appId": "com.velobrowser.app",
-    "productName": "Velo",
-    "copyright": "Copyright © 2026 Velo Browser contributors",
+    "appId": "com.khrambrowser.app",
+    "productName": "Khram",
+    "copyright": "Copyright © 2026 Khram Browser contributors",
     "directories": {
       "output": "release",
       "buildResources": "build"
@@ -47,7 +47,7 @@
     "asarUnpack": ["node_modules/sql.js/dist/**"],
     "afterPack": "./scripts/after-pack-win-icon.js",
     "extraMetadata": {
-      "productName": "Velo"
+      "productName": "Khram"
     },
     "win": {
       "signAndEditExecutable": false,
@@ -59,26 +59,26 @@
           ]
         }
       ],
-      "icon": "public/Velo.ico",
-      "executableName": "Velo"
+      "icon": "public/Khram.ico",
+      "executableName": "Khram"
     },
     "nsis": {
-      "artifactName": "Velo-Installer-Windows-${version}.${ext}",
+      "artifactName": "Khram-Installer-Windows-${version}.${ext}",
       "oneClick": false,
       "allowToChangeInstallationDirectory": true,
       "createDesktopShortcut": true,
       "createStartMenuShortcut": true,
-      "shortcutName": "Velo",
-      "uninstallDisplayName": "Velo"
+      "shortcutName": "Khram",
+      "uninstallDisplayName": "Khram"
     },
     "mac": {
       "target": [
         "dmg"
       ],
       "category": "public.app-category.productivity",
-      "artifactName": "Velo-Installer-macOS-${version}.${ext}",
-      "icon": "public/Velo-mac.png",
-      "executableName": "Velo",
+      "artifactName": "Khram-Installer-macOS-${version}.${ext}",
+      "icon": "public/Khram-mac.png",
+      "executableName": "Khram",
       "hardenedRuntime": false
     },
     "publish": [
@@ -92,9 +92,9 @@
         "AppImage"
       ],
       "category": "Network",
-      "artifactName": "Velo-Installer-Linux-${version}.${ext}",
-      "icon": "public/Velo.png",
-      "executableName": "Velo"
+      "artifactName": "Khram-Installer-Linux-${version}.${ext}",
+      "icon": "public/Khram.png",
+      "executableName": "Khram"
     }
   },
   "dependencies": {
