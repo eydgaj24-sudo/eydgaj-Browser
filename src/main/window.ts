@@ -70,10 +70,10 @@ export function createMainWindow(shellPreload: string, shellSession: Session, co
   mainWindow.contentView.addChildView(chromeView)
 
   chromeView.webContents.on('did-fail-load', (_event, code, desc, url) => {
-    console.error('[velo shell] did-fail-load', code, desc, url)
+    console.error('[khram shell] did-fail-load', code, desc, url)
   })
   chromeView.webContents.on('render-process-gone', (_event, details) => {
-    console.error('[velo shell] render-process-gone', details)
+    console.error('[khram shell] render-process-gone', details)
   })
 
   const layoutChrome = (): void => {
@@ -186,9 +186,9 @@ export function createMainWindow(shellPreload: string, shellSession: Session, co
       mgr.createTab(externalLaunch)
     } else if (mgr.getSnapshots().length === 0) {
       if (settings.shouldOfferWelcomeOnColdStart()) {
-        mgr.createTab('velo://welcome?intro=1')
+        mgr.createTab('khram://welcome?intro=1')
       } else {
-        mgr.createTab('velo://newtab')
+        mgr.createTab('khram://newtab')
       }
     }
     flushPendingExternalUrls((u) => mgr.createTab(u))
@@ -227,7 +227,7 @@ export function setApplicationMenu(): void {
         {
           label: 'New tab',
           accelerator: 'CmdOrCtrl+T',
-          click: () => Tab.manager?.createTab('velo://newtab')
+          click: () => Tab.manager?.createTab('khram://newtab')
         }
       ]
     },
