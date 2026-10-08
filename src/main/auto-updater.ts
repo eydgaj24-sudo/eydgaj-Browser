@@ -42,7 +42,7 @@ export function quitAndInstallUpdate(): void {
 }
 
 /** Call once after the main window (and shell WebContents) exists. */
-export function initVeloAutoUpdater(): void {
+export function initKhramAutoUpdater(): void {
   if (inited) return
   inited = true
 
