@@ -1,5 +1,5 @@
 /** Value name under HKCU\\Software\\RegisteredApplications (must stay in sync with windows-browser-capabilities). */
-export const VELO_WINDOWS_REGISTERED_APPLICATIONS_NAME = 'Velo.VeloBrowser.1'
+export const KHRAM_WINDOWS_REGISTERED_APPLICATIONS_NAME = 'Khram.KhramBrowser.1'
 
 export const CHROME_HEIGHT = 116
 
@@ -21,7 +21,7 @@ export const BOOKMARK_SAVE_MODAL_SHELL_RESERVE = 1
 
 export const PASSWORD_BAR_SHELL_RESERVE = 56
 
-/** Shell chrome extension when the “Make Velo your default browser” strip is visible. */
+/** Shell chrome extension when the "Make Khram your default browser" strip is visible. */
 export const DEFAULT_BROWSER_PROMPT_SHELL_RESERVE = 52
 
 
