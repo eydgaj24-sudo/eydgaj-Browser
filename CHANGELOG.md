@@ -1,6 +1,6 @@
 # Changelog
 
-All notable changes to Velo are documented here. Edit the **`## [x.y.z]`** section for the version you are about to tag, then commit and push the tag (see `docs/releasing.md`).
+All notable changes to Khram are documented here. Edit the **`## [x.y.z]`** section for the version you are about to tag, then commit and push the tag (see `docs/releasing.md`).
 
 The release workflow takes the section matching the tag (e.g. tag `v1.0.2` → heading `## [1.0.2]`) and uses it as the GitHub release description (plus auto-generated contributor/commit notes).
 
@@ -16,9 +16,9 @@ The release workflow takes the section matching the tag (e.g. tag `v1.0.2` → h
 
 - Pin Tabs
 
-- Clear Browsing Data (History, Cookies, Cache, Passwords, Downloads - Time Range) (velo://settings/privacy)
+- Clear Browsing Data (History, Cookies, Cache, Passwords, Downloads - Time Range) (khram://settings/privacy)
 
-- About Page (Shows general information & features about Velo, velo://about/)
+- About Page (Shows general information & features about Khram, khram://about/)
 
 ### Changed
 
@@ -38,7 +38,7 @@ The release workflow takes the section matching the tag (e.g. tag `v1.0.2` → h
 
 ### Changed
 
-- Welcome screen is now a 3 step onboarding page, where you can import data from other browsers immediately and also make Velo your default browser
+- Welcome screen is now a 3 step onboarding page, where you can import data from other browsers immediately and also make Khram your default browser
 
 - Completely changed how the Password Manager works, V2 Password Manager
 
@@ -84,7 +84,7 @@ The release workflow takes the section matching the tag (e.g. tag `v1.0.2` → h
 
 ### Changed
 
-- **Password manager**: vault now uses OS-protected storage (Electron `safeStorage`) with automatic setup; one-time migration from legacy passphrase vaults in Settings. Save-password bar skips credentials already stored; autofill fixes for sites like Discord (passkey/WebAuthn form guard relaxed, password-like fields and picker logic improved).
+- **Password manager**: vault now uses OS-protected storage (Electron `safeStorage`) with automatic setup; one-time migration from legacy passphrase vaults in Settings. Save-password bar skips credential submission for `khram://` internal URLs.
 - **Privacy / ad blocking**: default ad-block level off; experimental warning on Privacy settings; stricter compatibility-oriented blocking behavior (ongoing refinements).
 
 ### Fixed
