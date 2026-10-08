@@ -3,7 +3,7 @@ import { existsSync } from 'node:fs'
 import { mkdir } from 'node:fs/promises'
 import { basename, dirname, extname, join } from 'node:path'
 import { fileURLToPath } from 'node:url'
-import { registerVeloProtocol } from './protocol.js'
+import { registerKhramProtocol } from './protocol.js'
 import { createMainWindow, getChromeWebContents, getMainWindow, setApplicationMenu } from './window.js'
 import { registerIpcHandlers } from './ipc.js'
 import { applyAdBlockLevel, registerContentSessionForAdblock } from './adblock.js'
@@ -22,7 +22,7 @@ import {
 import { IPC } from '../shared/ipc.js'
 import { getSettings, readBootUseHardwareAcceleration } from './settings-store.js'
 import * as passwordVault from './password-vault.js'
-import { initVeloAutoUpdater } from './auto-updater.js'
+import { initKhramAutoUpdater } from './auto-updater.js'
 
 const __dirname = dirname(fileURLToPath(import.meta.url))
 
@@ -51,7 +51,7 @@ const contentSessionsWithWillDownload = new WeakSet<Session>()
 const contentSessionsMacWebAuthnPicker = new WeakSet<Session>()
 
 function prepareBrowsingSession(contentSession: Session): void {
-  registerVeloProtocol(contentSession)
+  registerKhramProtocol(contentSession)
   
   if (process.platform === 'darwin' && !contentSessionsMacWebAuthnPicker.has(contentSession)) {
     contentSessionsMacWebAuthnPicker.add(contentSession)
@@ -76,7 +76,7 @@ function prepareBrowsingSession(contentSession: Session): void {
   }
   registerContentSessionForAdblock(contentSession)
   void applyAdBlockLevel(getSettings().adBlockLevel).catch((err) => {
-    console.error('[velo adblock] apply failed', err)
+    console.error('[khram adblock] apply failed', err)
   })
 }
 
@@ -120,7 +120,7 @@ if (!gotSingleInstanceLock) {
 
   protocol.registerSchemesAsPrivileged([
     {
-      scheme: 'velo',
+      scheme: 'khram',
       privileges: {
         standard: true,
         secure: true,
@@ -138,22 +138,22 @@ if (!gotSingleInstanceLock) {
 
   app.whenReady().then(async () => {
     if (process.platform === 'win32') {
-      app.setAppUserModelId('com.velobrowser.app')
+      app.setAppUserModelId('com.khrambrowser.app')
     }
     
     if (process.platform === 'darwin') {
       try {
         app.configureWebAuthn({})
       } catch (err) {
-        console.warn('[velo] configureWebAuthn failed', err)
+        console.warn('[khram] configureWebAuthn failed', err)
       }
     }
     registerIpcHandlers()
     setApplicationMenu()
     await initDownloadsStore()
 
-    const shellSession = session.fromPartition('memory:velo-shell')
-    const contentSession = session.fromPartition('persist:velo')
+    const shellSession = session.fromPartition('memory:khram-shell')
+    const contentSession = session.fromPartition('persist:khram')
     prepareBrowsingSession(contentSession)
 
     const shellPreload = join(__dirname, '../preload/index.mjs')
@@ -162,7 +162,7 @@ if (!gotSingleInstanceLock) {
     try {
       passwordVault.ensureVaultReady()
     } catch (err) {
-      console.warn('[velo] password vault init', err)
+      console.warn('[khram] password vault init', err)
     }
 
     setDownloadsListListener(() => {
@@ -171,7 +171,7 @@ if (!gotSingleInstanceLock) {
         wc.send(IPC.downloadsChanged, listDownloads())
       }
     })
-    initVeloAutoUpdater()
+    initKhramAutoUpdater()
   })
 
   app.on('window-all-closed', () => {
@@ -180,8 +180,8 @@ if (!gotSingleInstanceLock) {
 
   app.on('activate', () => {
     if (BaseWindow.getAllWindows().length === 0) {
-      const shellSession = session.fromPartition('memory:velo-shell')
-      const contentSession = session.fromPartition('persist:velo')
+      const shellSession = session.fromPartition('memory:khram-shell')
+      const contentSession = session.fromPartition('persist:khram')
       prepareBrowsingSession(contentSession)
       const shellPreload = join(__dirname, '../preload/index.mjs')
       createMainWindow(shellPreload, shellSession, contentSession)
