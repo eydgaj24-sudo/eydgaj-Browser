@@ -1,30 +1,30 @@
 import type { Session } from 'electron'
-import { renderBookmarksPage } from './velo-pages/bookmarks.js'
-import { renderDownloadsPage } from './velo-pages/downloads.js'
-import { renderHistoryPage } from './velo-pages/history.js'
-import { renderNewTabPage } from './velo-pages/newtab.js'
-import { renderNotFoundPage } from './velo-pages/not-found.js'
-import { veloRouteKey } from './velo-pages/route-key.js'
-import { renderSettingsPage } from './velo-pages/settings.js'
-import { readVeloLogoPng } from './velo-pages/static-assets.js'
-import { readBrowserBackgroundFile } from './velo-pages/browser-backgrounds.js'
-import { renderWelcomePage } from './velo-pages/welcome.js'
-import { renderAboutPage } from './velo-pages/about.js'
+import { renderBookmarksPage } from './khram-pages/bookmarks.js'
+import { renderDownloadsPage } from './khram-pages/downloads.js'
+import { renderHistoryPage } from './khram-pages/history.js'
+import { renderNewTabPage } from './khram-pages/newtab.js'
+import { renderNotFoundPage } from './khram-pages/not-found.js'
+import { khramRouteKey } from './khram-pages/route-key.js'
+import { renderSettingsPage } from './khram-pages/settings.js'
+import { readKhramLogoPng } from './khram-pages/static-assets.js'
+import { readBrowserBackgroundFile } from './khram-pages/browser-backgrounds.js'
+import { renderWelcomePage } from './khram-pages/welcome.js'
+import { renderAboutPage } from './khram-pages/about.js'
 
 
-export function registerVeloProtocol(contentSession: Session): void {
-  contentSession.protocol.handle('velo', async (request) => {
+export function registerKhramProtocol(contentSession: Session): void {
+  contentSession.protocol.handle('khram', async (request) => {
     try {
       new URL(request.url)
     } catch {
       return new Response('Bad URL', { status: 400 })
     }
 
-    const route = veloRouteKey(request.url)
+    const route = khramRouteKey(request.url)
     const htmlHeaders = { 'content-type': 'text/html; charset=utf-8' }
 
-    if (route === '/velo.png') {
-      const png = readVeloLogoPng()
+    if (route === '/khram.png') {
+      const png = readKhramLogoPng()
       if (!png) {
         return new Response('Not found', { status: 404 })
       }
