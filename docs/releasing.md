@@ -1,4 +1,4 @@
-# Releasing a new Velo version
+# Releasing a new Khram version
 
 ## 1. Edit the changelog
 
@@ -41,11 +41,11 @@ Tag name **must** be `v` plus the same semver as in `package.json`:
 
 ```bash
 git tag v1.0.2
-git push origin main
+git push origin master
 git push origin v1.0.2
 ```
 
-(Replace `main` with your default branch if different.)
+(Replace `master` with your default branch if different.)
 
 Pushing the tag starts the **Release** workflow: three runners build installers, then **Publish GitHub Release** creates the GitHub Release and uploads every file (Windows, macOS, Linux). **Your builds are still published** to GitHub Releases.
 
@@ -59,8 +59,8 @@ Your `package.json` tells electron-builder to use the **GitHub** publisher. Afte
 
 So:
 
-- **`--publish never`** = “only build the installers on this runner; do not upload yet.”
-- **`publish-release`** = “one job uploads all installers + release notes to GitHub Releases.”
+- **`--publish never`** = "only build the installers on this runner; do not upload yet."
+- **`publish-release`** = "one job uploads all installers + release notes to GitHub Releases."
 
 Without `--publish never`, you would need to set `GH_TOKEN` on **three** runners at once, and those uploads could **fight each other** for the same release. One publish step at the end is the intended setup.
 

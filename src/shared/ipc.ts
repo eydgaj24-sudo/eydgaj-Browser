@@ -1,461 +1,267 @@
-
+import { z } from 'zod'
 
 export const IPC = {
-  tabsCreate: 'velo:tabs:create',
-  tabsClose: 'velo:tabs:close',
-  tabsSetActive: 'velo:tabs:set-active',
-  tabsGetState: 'velo:tabs:get-state',
-  tabsUpdated: 'velo:tabs:updated',
-  tabsPin: 'velo:tabs:pin',
-  tabsUnpin: 'velo:tabs:unpin',
-  tabsSetMuted: 'velo:tabs:set-muted',
-
-  tabsSplitCreate: 'velo:tabs:split-create',
-  tabsSplitExit: 'velo:tabs:split-exit',
-  tabsSplitSetRatio: 'velo:tabs:split-set-ratio',
-  tabsSplitSetFocus: 'velo:tabs:split-set-focus',
-  tabsSplitSwap: 'velo:tabs:split-swap',
-
-  splitDividerDragStart: 'velo:split-divider:drag-start',
-  splitDividerDragMove: 'velo:split-divider:drag-move',
-  splitDividerDragEnd: 'velo:split-divider:drag-end',
-  workspacesCreate: 'velo:workspaces:create',
-  workspacesRename: 'velo:workspaces:rename',
-  workspacesDelete: 'velo:workspaces:delete',
-  workspacesReorder: 'velo:workspaces:reorder',
-  workspacesSwitch: 'velo:workspaces:switch',
-  workspacesUpdated: 'velo:workspaces:updated',
-
-  navSubmit: 'velo:nav:submit',
-  navBack: 'velo:nav:back',
-  navForward: 'velo:nav:forward',
-  navReload: 'velo:nav:reload',
-  navStop: 'velo:nav:stop',
-
-  
-  omnibarFetchSuggestions: 'velo:omnibar:fetch-suggestions',
-
-  windowMinimize: 'velo:window:minimize',
-  windowMaximizeToggle: 'velo:window:maximize-toggle',
-  windowClose: 'velo:window:close',
-
-  bookmarksList: 'velo:bookmarks:list',
-  bookmarksAdd: 'velo:bookmarks:add',
-  bookmarksRemove: 'velo:bookmarks:remove',
-  bookmarksFoldersList: 'velo:bookmarks:folders:list',
-  bookmarksFolderAdd: 'velo:bookmarks:folders:add',
-  bookmarksFolderRemove: 'velo:bookmarks:folders:remove',
-
-  internalBookmarksLibrary: 'velo:internal:bookmarks:library',
-  internalBookmarksRemove: 'velo:internal:bookmarks:remove',
-  internalBookmarkFolderAdd: 'velo:internal:bookmark-folder:add',
-  internalBookmarkFolderRemove: 'velo:internal:bookmark-folder:remove',
-
-  historyList: 'velo:history:list',
-  historyClear: 'velo:history:clear',
-
-  settingsGet: 'velo:settings:get',
-  settingsSet: 'velo:settings:set',
-  settingsChanged: 'velo:settings:changed',
-
-  downloadsList: 'velo:downloads:list',
-  downloadsRemove: 'velo:downloads:remove',
-  
-  downloadsApplyAction: 'velo:downloads:apply-action',
-  downloadsOpenFile: 'velo:downloads:open-file',
-  
-  downloadsChanged: 'velo:downloads:changed',
-
-  devtoolsOpenPage: 'velo:devtools:open-page',
-  devtoolsOpenShell: 'velo:devtools:open-shell',
-
-  
-  shellOverflowMenuSetReserve: 'velo:shell:overflow-menu-set-reserve',
-  
-  shellOpenNewTabShortcutModal: 'velo:shell:newtab-shortcut-modal',
-  
-  shellDownloadsPopoverSetReserve: 'velo:shell:downloads-popover-set-reserve',
-  
-  shellEnsureChromeOnTop: 'velo:shell:ensure-chrome-on-top',
-  
-  shellSiteInfoPopoverSetReserve: 'velo:shell:site-info-popover-set-reserve',
-  
-  shellBookmarkModalSetReserve: 'velo:shell:bookmark-modal-set-reserve',
-  
-  shellPasswordBarSetReserve: 'velo:shell:password-bar-set-reserve',
-
-  shellDefaultBrowserPromptSetReserve: 'velo:shell:default-browser-prompt-set-reserve',
-  
-  shellOmnibarSuggestSetReserve: 'velo:shell:omnibar-suggest-set-reserve',
-
-  
-  passwordBarState: 'velo:password-bar:state',
-
-  
-  passwordTabBridge: 'velo:password-tab:bridge',
-
-  
-  internalSettingsGet: 'velo:internal:settings:get',
-  internalSettingsSet: 'velo:internal:settings:set',
-  internalHistoryList: 'velo:internal:history:list',
-  internalHistoryRemove: 'velo:internal:history:remove',
-  internalBookmarksList: 'velo:internal:bookmarks:list', // legacy; prefer internalBookmarksLibrary
-  internalDownloadsList: 'velo:internal:downloads:list',
-  internalDownloadsReveal: 'velo:internal:downloads:reveal',
-  internalDownloadsOpen: 'velo:internal:downloads:open',
-  internalNewTabShortcutsList: 'velo:internal:newtab:shortcuts:list',
-  internalNewTabShortcutAdd: 'velo:internal:newtab:shortcuts:add',
-  internalNewTabShortcutUpdate: 'velo:internal:newtab:shortcuts:update',
-  internalNewTabShortcutRemove: 'velo:internal:newtab:shortcuts:remove',
-  internalNewTabShortcutsReorder: 'velo:internal:newtab:shortcuts:reorder',
-  internalBrowserDataDetectSources: 'velo:internal:browser-data:detect-sources',
-  internalBrowserDataImportChromium: 'velo:internal:browser-data:import-chromium',
-  internalNavigateSearch: 'velo:internal:navigate:search',
-  internalNavigateUrl: 'velo:internal:navigate:url',
-  
-  internalPickDownloadFolder: 'velo:internal:pick-download-folder',
-  
-  internalRelaunchApp: 'velo:internal:app:relaunch',
-  internalWelcomeComplete: 'velo:internal:welcome:complete',
-
-  internalDefaultBrowserGet: 'velo:internal:default-browser:get',
-  internalDefaultBrowserRegister: 'velo:internal:default-browser:register',
-  internalDefaultBrowserOpenSettings: 'velo:internal:default-browser:open-settings',
-  internalDefaultBrowserRegisterAndOpenSettings: 'velo:internal:default-browser:register-and-open-settings',
-
-  autoUpdateStatus: 'velo:auto-update:status',
-  internalAutoUpdateCheck: 'velo:internal:auto-update:check',
-  internalAutoUpdateGetStatus: 'velo:internal:auto-update:get-status',
-  internalAutoUpdateQuitAndInstall: 'velo:internal:auto-update:quit-and-install',
-
-  internalPasswordVaultExists: 'velo:internal:password-vault:exists',
-  internalPasswordVaultNeedsMigration: 'velo:internal:password-vault:needs-migration',
-  internalPasswordVaultMigrate: 'velo:internal:password-vault:migrate',
-  internalPasswordVaultUnlocked: 'velo:internal:password-vault:unlocked',
-  internalPasswordVaultOsKeyAvailable: 'velo:internal:password-vault:os-key-available',
-  internalPasswordVaultList: 'velo:internal:password-vault:list',
-  internalPasswordVaultDelete: 'velo:internal:password-vault:delete',
-  internalPasswordVaultImport: 'velo:internal:password-vault:import',
-  internalPasswordVaultExport: 'velo:internal:password-vault:export',
-
-  internalClearBrowsingData: 'velo:internal:clear-browsing-data',
-
-  
-  adblockToast: 'velo:adblock:toast',
-
-  
-  tabRetryNavigation: 'velo:tab:retry-navigation',
-
-  
-  passwordBarSave: 'velo:password-bar:save',
-  
-  passwordBarNever: 'velo:password-bar:never',
-  
-  passwordBarDismiss: 'velo:password-bar:dismiss'
+  tabsCreate: 'khram:tabs-create',
+  tabsClose: 'khram:tabs-close',
+  tabsPin: 'khram:tabs-pin',
+  tabsUnpin: 'khram:tabs-unpin',
+  tabsSetMuted: 'khram:tabs-set-muted',
+  tabsSetActive: 'khram:tabs-set-active',
+  tabsGetState: 'khram:tabs-get-state',
+  tabsSplitCreate: 'khram:tabs-split-create',
+  tabsSplitExit: 'khram:tabs-split-exit',
+  tabsSplitSetRatio: 'khram:tabs-split-set-ratio',
+  tabsSplitSetFocus: 'khram:tabs-split-set-focus',
+  tabsSplitSwap: 'khram:tabs-split-swap',
+  splitDividerDragStart: 'khram:split-divider-drag-start',
+  splitDividerDragMove: 'khram:split-divider-drag-move',
+  splitDividerDragEnd: 'khram:split-divider-drag-end',
+  workspacesList: 'khram:workspaces-list',
+  workspacesCreate: 'khram:workspaces-create',
+  workspacesRename: 'khram:workspaces-rename',
+  workspacesDelete: 'khram:workspaces-delete',
+  workspacesReorder: 'khram:workspaces-reorder',
+  workspacesSwitch: 'khram:workspaces-switch',
+  navSubmit: 'khram:nav-submit',
+  navBack: 'khram:nav-back',
+  navForward: 'khram:nav-forward',
+  navReload: 'khram:nav-reload',
+  navStop: 'khram:nav-stop',
+  bookmarksList: 'khram:bookmarks-list',
+  bookmarksAdd: 'khram:bookmarks-add',
+  bookmarksFoldersList: 'khram:bookmarks-folders-list',
+  bookmarksFolderAdd: 'khram:bookmarks-folder-add',
+  bookmarksFolderRemove: 'khram:bookmarks-folder-remove',
+  bookmarksRemove: 'khram:bookmarks-remove',
+  historyList: 'khram:history-list',
+  historyClear: 'khram:history-clear',
+  historyRemove: 'khram:history-remove',
+  settingsGet: 'khram:settings-get',
+  settingsSet: 'khram:settings-set',
+  downloadsList: 'khram:downloads-list',
+  downloadsRemove: 'khram:downloads-remove',
+  downloadsApplyAction: 'khram:downloads-apply-action',
+  downloadsOpenFile: 'khram:downloads-open-file',
+  devtoolsOpenPage: 'khram:devtools-open-page',
+  devtoolsOpenShell: 'khram:devtools-open-shell',
+  windowMinimize: 'khram:window-minimize',
+  windowMaximizeToggle: 'khram:window-maximize-toggle',
+  windowClose: 'khram:window-close',
+  shellOpenNewTabShortcutModal: 'khram:shell-open-new-tab-shortcut-modal',
+  shellOverflowMenuSetReserve: 'khram:shell-overflow-menu-set-reserve',
+  shellDownloadsPopoverSetReserve: 'khram:shell-downloads-popover-set-reserve',
+  shellSiteInfoPopoverSetReserve: 'khram:shell-site-info-popover-set-reserve',
+  shellBookmarkModalSetReserve: 'khram:shell-bookmark-modal-set-reserve',
+  shellEnsureChromeOnTop: 'khram:shell-ensure-chrome-on-top',
+  shellOmnibarSuggestSetReserve: 'khram:shell-omnibar-suggest-set-reserve',
+  shellPasswordBarSetReserve: 'khram:shell-password-bar-set-reserve',
+  shellDefaultBrowserPromptSetReserve: 'khram:shell-default-browser-prompt-set-reserve',
+  omnibarFetchSuggestions: 'khram:omnibar-fetch-suggestions',
+  passwordTabBridge: 'khram:password-tab-bridge',
+  passwordBarSave: 'khram:password-bar-save',
+  passwordBarNever: 'khram:password-bar-never',
+  passwordBarDismiss: 'khram:password-bar-dismiss',
+  internalSettingsGet: 'khram:internal-settings-get',
+  internalSettingsSet: 'khram:internal-settings-set',
+  internalPickDownloadFolder: 'khram:internal-pick-download-folder',
+  internalRelaunchApp: 'khram:internal-relaunch-app',
+  internalWelcomeComplete: 'khram:internal-welcome-complete',
+  internalDefaultBrowserGet: 'khram:internal-default-browser-get',
+  internalDefaultBrowserRegister: 'khram:internal-default-browser-register',
+  internalDefaultBrowserOpenSettings: 'khram:internal-default-browser-open-settings',
+  internalDefaultBrowserRegisterAndOpenSettings: 'khram:internal-default-browser-register-and-open-settings',
+  internalAutoUpdateGetStatus: 'khram:internal-auto-update-get-status',
+  internalAutoUpdateCheck: 'khram:internal-auto-update-check',
+  internalAutoUpdateQuitAndInstall: 'khram:internal-auto-update-quit-and-install',
+  autoUpdateStatus: 'khram:auto-update-status',
+  internalHistoryList: 'khram:internal-history-list',
+  internalHistoryRemove: 'khram:internal-history-remove',
+  internalBookmarksList: 'khram:internal-bookmarks-list',
+  internalBookmarksLibrary: 'khram:internal-bookmarks-library',
+  internalBookmarksRemove: 'khram:internal-bookmarks-remove',
+  internalBookmarkFolderAdd: 'khram:internal-bookmark-folder-add',
+  internalBookmarkFolderRemove: 'khram:internal-bookmark-folder-remove',
+  internalDownloadsList: 'khram:internal-downloads-list',
+  internalDownloadsReveal: 'khram:internal-downloads-reveal',
+  internalDownloadsOpen: 'khram:internal-downloads-open',
+  internalNewTabShortcutsList: 'khram:internal-new-tab-shortcuts-list',
+  internalNewTabShortcutAdd: 'khram:internal-new-tab-shortcut-add',
+  internalNewTabShortcutUpdate: 'khram:internal-new-tab-shortcut-update',
+  internalNewTabShortcutRemove: 'khram:internal-new-tab-shortcut-remove',
+  internalNewTabShortcutsReorder: 'khram:internal-new-tab-shortcuts-reorder',
+  internalBrowserDataDetectSources: 'khram:internal-browser-data-detect-sources',
+  internalBrowserDataImportChromium: 'khram:internal-browser-data-import-chromium',
+  internalNavigateSearch: 'khram:internal-navigate-search',
+  internalNavigateUrl: 'khram:internal-navigate-url',
+  tabRetryNavigation: 'khram:tab-retry-navigation',
+  internalPasswordVaultExists: 'khram:internal-password-vault-exists',
+  internalPasswordVaultNeedsMigration: 'khram:internal-password-vault-needs-migration',
+  internalPasswordVaultMigrate: 'khram:internal-password-vault-migrate',
+  internalPasswordVaultOsKeyAvailable: 'khram:internal-password-vault-os-key-available',
+  internalPasswordVaultUnlocked: 'khram:internal-password-vault-unlocked',
+  internalPasswordVaultList: 'khram:internal-password-vault-list',
+  internalPasswordVaultDelete: 'khram:internal-password-vault-delete',
+  internalPasswordVaultImport: 'khram:internal-password-vault-import',
+  internalPasswordVaultExport: 'khram:internal-password-vault-export',
+  internalClearBrowsingData: 'khram:internal-clear-browsing-data'
 } as const
 
-export type SplitPaneSnapshot = {
-  tabId: number
-  url: string
-  title: string
-  favicon: string | null
-  isLoading: boolean
-  canGoBack: boolean
-  canGoForward: boolean
-  muted?: boolean
-}
-
-export type TabSnapshot = {
-  id: number
-  url: string
-  title: string
-  favicon: string | null
-  isLoading: boolean
-  canGoBack: boolean
-  canGoForward: boolean
-  
-  isResting?: boolean
-  pinned?: boolean
-  muted?: boolean
-
-  /** Present when this tab strip entry is a split-view pair (id = left pane tab id). */
-  split?: {
-    left: SplitPaneSnapshot
-    right: SplitPaneSnapshot
-    ratio: number
-    focusedPane: 'left' | 'right'
-  }
-}
-
-
-export type TabsStatePayload = {
-  tabs: TabSnapshot[]
-  activeId: number | null
-  /** Tab id that receives nav / keyboard focus (focused split pane when in split view). */
-  focusedTabId: number | null
-}
-
-export type SplitExitMode = 'both' | 'left' | 'right'
-
-export type WorkspaceSnapshot = {
-  id: string
-  name: string
-  icon: string | null
-  createdAt: number
-  tabCount: number
-  active: boolean
-}
-
-export type WorkspacesStatePayload = {
-  workspaces: WorkspaceSnapshot[]
-  activeWorkspaceId: string
-}
-
-export type SearchEngine = 'google' | 'bing' | 'duckduckgo' | 'brave' | 'ecosia'
-
-export type BrowserChromeTheme = 'default' | 'white' | 'black' | 'grey'
-
-export type AdBlockLevel = 'off' | 'low' | 'medium' | 'high'
-
-export const NEW_TAB_BACKGROUND_PRESETS = [
-  'default',
-  'red',
-  'orange',
-  'yellow',
-  'green',
-  'blue',
-  'indigo',
-  'violet',
-  'black',
-  'white',
-  'grey',
-  'dark-grey',
-  'light-grey'
-] as const
-
+export const NEW_TAB_BACKGROUND_PRESETS = ['default', 'light', 'dark', 'sunset', 'forest', 'ocean'] as const
 export type NewTabBackgroundPreset = (typeof NEW_TAB_BACKGROUND_PRESETS)[number]
 
-export type NewTabBackground =
-  | { kind: 'preset'; preset: NewTabBackgroundPreset }
-  | { kind: 'image'; filename: string }
+export const BROWSER_DATA_CHROMIUM_IDS = ['chrome', 'edge', 'brave', 'vivaldi', 'opera'] as const
 
-export type BackgroundTabRestMinutes = 5 | 15 | 30 | 60
-
-export type VeloSettings = {
-  searchEngine: SearchEngine
-  
-  browserChromeTheme: BrowserChromeTheme
-  startupBehavior: 'new-tab' | 'restore-tabs'
-  
-  newTabShortcutsEnabled: boolean
-  
-  newTabBackground: NewTabBackground
-  
-  adBlockLevel: AdBlockLevel
-  
-  adBlockAllowlistHostnames: string[]
-  
-  downloadDirectory: string
-  
-  downloadLocationIsDefault: boolean
-  
-  passwordOfferToSave: boolean
-  
-  passwordAutofillOnFocus: boolean
-  
-  passwordAutofillHotkey: boolean
-  
-  passwordsNeverSaveDomains: string[]
-  
-  passwordVaultRememberDevice: boolean
-
-  
-  prefetchNetworkConnections: boolean
-  
-  notifyOnTabFreeze: boolean
-  
-  dimRestingTabs: boolean
-  
-  alwaysActiveHostnames: string[]
-  
-  lowPowerBackgroundMode: boolean
-  
-  backgroundTabRestMinutes: BackgroundTabRestMinutes
-  
-  autoThrottleBackgroundTabs: boolean
-  
-  gameQuietBackground: boolean
-  
-  useHardwareAcceleration: boolean
-}
-
-export type PasswordVaultEntryDto = {
-  id: string
-  domain: string
-  username: string
-  password: string
-  createdAt: number
-  updatedAt: number
-}
-
-export type DefaultBrowserStatusPayload = {
-  isPackaged: boolean
-  http: boolean
-  https: boolean
-  isDefault: boolean
-}
-
-export type DefaultBrowserRegisterResult = {
-  ok: boolean
-  http: boolean
-  https: boolean
-  message?: string
-}
-
-/** Where to open Windows Settings for default-browser setup. */
-export type DefaultBrowserOpenSettingsPage = 'default-apps' | 'installed-apps'
-
-export type AutoUpdateStatusPayload =
-  | { phase: 'idle' }
-  | { phase: 'dev' }
-  | { phase: 'checking' }
-  | { phase: 'available'; version: string }
-  | { phase: 'downloading'; percent: number; transferred: number; total: number }
-  | { phase: 'downloaded'; version: string }
-  | { phase: 'error'; message: string }
-
-export type PasswordBarState =
-  | { open: false }
-  | {
-      open: true
-      tabId: number
-      domain: string
-      username: string
-      password: string
-    }
-
-
-export type AdblockToastPayload = {
-  count: number
-  
-  suggestSiteFix?: boolean
-  
-  pageHostname?: string
-  
-  /** Shorter dismiss when the blocking happened in a background tab */
-  quiet?: boolean
-}
-
-
-export const DEFAULT_BOOKMARK_FOLDER_ID = 'default' as const
-
-export type BookmarkFolder = {
-  id: string
-  name: string
-  createdAt: number
-}
-
-export type BookmarkEntry = {
+export interface HistoryEntry {
   id: string
   url: string
   title: string
-  createdAt: number
-  
-  folderId: string
-  
-  favicon: string | null
+  visited: number
 }
 
+export interface BookmarkEntry {
+  id: string
+  url: string
+  title: string
+  favicon?: string
+  folderId?: string
+}
 
-export type BookmarksLibraryPayload = {
-  folders: BookmarkFolder[]
+export interface BookmarkFolder {
+  id: string
+  name: string
+}
+
+export interface BookmarksLibraryPayload {
   bookmarks: BookmarkEntry[]
+  folders: BookmarkFolder[]
 }
 
+export interface DownloadEntry {
+  id: string
+  filename: string
+  url: string
+  startTime: number
+  totalBytes: number
+  receivedBytes: number
+  state: 'in-progress' | 'completed' | 'cancelled' | 'interrupted'
+  isPaused: boolean
+  canResume: boolean
+  savePath: string
+}
 
-export type NewTabShortcut = {
+export interface NewTabShortcut {
   id: string
   label: string
   url: string
-  createdAt: number
+  order: number
 }
 
-export type HistoryEntry = {
+export type KhramTheme = 'default' | 'white' | 'black' | 'grey'
+export type SearchEngine = 'google' | 'bing' | 'duckduckgo' | 'brave' | 'ecosia'
+export type StartupBehavior = 'new-tab' | 'restore-tabs'
+
+export interface KhramSettings {
+  searchEngine: SearchEngine
+  browserChromeTheme: KhramTheme
+  startupBehavior: StartupBehavior
+  newTabShortcutsEnabled: boolean
+  newTabBackground: NewTabBackgroundConfig
+  adBlockLevel: 'off' | 'low' | 'medium' | 'high'
+  adBlockAllowlistHostnames: string[]
+  downloadDirectory: string
+  passwordOfferToSave: boolean
+  passwordAutofillEnabled: boolean
+  passwordAutofillOnFocus: boolean
+  passwordAutofillHotkey: boolean
+  passwordsNeverSaveDomains: string[]
+  passwordVaultRememberDevice: boolean
+  prefetchNetworkConnections: boolean
+  notifyOnTabFreeze: boolean
+  dimRestingTabs: boolean
+  alwaysActiveHostnames: string[]
+  lowPowerBackgroundMode: boolean
+  backgroundTabRestMinutes: 5 | 15 | 30 | 60
+  autoThrottleBackgroundTabs: boolean
+  gameQuietBackground: boolean
+  useHardwareAcceleration: boolean
+}
+
+export type VeloSettings = KhramSettings
+
+export interface NewTabBackgroundConfig {
+  kind: 'preset' | 'image'
+  preset?: NewTabBackgroundPreset
+  filename?: string
+}
+
+export interface PasswordVaultEntryDto {
   id: string
-  url: string
-  title: string
-  visitedAt: number
+  domain: string
+  username: string
+  password?: string
 }
 
-export type DownloadEntry = {
-  id: string
-  filename: string
-  path: string
-  
-  sourceUrl?: string
-  state: 'progressing' | 'completed' | 'cancelled' | 'interrupted'
-  receivedBytes: number
-  totalBytes: number
-  startedAt: number
-  
-  fileRemovedFromDisk?: boolean
+export interface DefaultBrowserStatusPayload {
+  isPackaged: boolean
+  isDefault: boolean
+  http: boolean
+  https: boolean
 }
 
-export const BROWSER_DATA_CHROMIUM_IDS = ['edge', 'chrome', 'brave', 'opera', 'opera-gx'] as const
+export type DefaultBrowserRegisterResult = { ok: true } | { ok: false; message: string }
 
-export type BrowserDataChromiumBrowserId = (typeof BROWSER_DATA_CHROMIUM_IDS)[number]
+export type DefaultBrowserOpenSettingsPage = 'default-apps' | 'installed-apps'
 
-export type BrowserDataSourceProfile = {
-  id: string
-  name: string
-  path: string
-  hasHistory: boolean
-  hasBookmarks: boolean
+export interface AutoUpdateStatusPayload {
+  phase: 'idle' | 'dev' | 'checking' | 'available' | 'downloading' | 'downloaded' | 'error'
+  version?: string
+  percent?: number
+  transferred?: number
+  total?: number
+  message?: string
 }
 
-export type BrowserDataSource = {
-  id: BrowserDataChromiumBrowserId
-  displayName: string
-  available: boolean
-  profiles: BrowserDataSourceProfile[]
+export interface BrowserDataDetectSourcesPayload {
+  [browserId: string]: Array<{
+    id: string
+    name: string
+  }>
 }
 
-export type BrowserDataDetectSourcesPayload = {
-  sources: BrowserDataSource[]
-}
-
-export type BrowserDataImportChromiumPayload = {
-  browserId: BrowserDataChromiumBrowserId
+export interface BrowserDataImportChromiumPayload {
+  browserId: string
   profileId: string
   history: boolean
   bookmarks: boolean
   downloads: boolean
 }
 
-export type BrowserDataImportChromiumResult = {
-  browserId: BrowserDataChromiumBrowserId
-  imported: { history: number; bookmarks: number; downloads: number }
-  skipped: { history: number; bookmarks: number; downloads: number }
-  errors: string[]
+export interface BrowserDataImportChromiumResult {
+  imported: {
+    history: number
+    bookmarks: number
+    downloads: number
+  }
 }
 
-export type ClearBrowsingDataTimeRange = 'hour' | 'day' | 'week' | 'month' | 'all'
-
-export type ClearBrowsingDataPayload = {
+export interface ClearBrowsingDataPayload {
   history: boolean
   cookies: boolean
   cache: boolean
   passwords: boolean
   downloads: boolean
-  timeRange: ClearBrowsingDataTimeRange
+  timeRange: 'hour' | 'day' | 'week' | 'month' | 'all'
 }
 
-export type ClearBrowsingDataResult = {
-  cleared: {
-    history: number
-    cookies: boolean
-    cache: boolean
-    passwords: number
-    downloads: number
-  }
+export interface ClearBrowsingDataResult {
+  ok: boolean
+  message?: string
+}
+
+export interface PasswordBarState {
+  open: boolean
+  tabId: number
+  domain: string
+  username: string
+  password: string
 }
