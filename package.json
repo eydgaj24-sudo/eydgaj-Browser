@@ -2,7 +2,7 @@
   "name": "khram-browser",
   "productName": "Khram",
   "version": "2.0.2",
-  "description": "Khram",
+  "description": "Khram Browser - A modern, customizable desktop browser",
   "main": "./out/main/index.js",
   "type": "module",
   "scripts": {
